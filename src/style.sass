@@ -1,0 +1,659 @@
+@import "./_include-media.scss"
+
+// @font-face
+//   font-family: 'Futura'
+//   font-weight: 400
+//   src: url('/src/FuturaStd-Book.otf')
+//
+// @font-face
+//   font-family: 'Futura'
+//   font-weight: 500
+//   src: url('/src/FuturaStd-Bold.otf')
+//
+// @font-face
+//   font-family: 'Futura'
+//   font-weight: 300
+//   src: url('/src/FuturaStd-Light.otf')
+
+// green tones
+$lightcolor: #c6dec0
+$neutralcolor: #8acd94
+$darkcolor: #63a088
+$bgcolor: mix(#252525, #0e4b60, 80)
+
+//dark grey tones
+// $lightcolor: #F6F6F6
+// $neutralcolor: #F6F6F6
+// $darkcolor: #666666
+// $bgcolor: #252525
+
+// //light grey tones
+// $lightcolor: #FFFFFF
+// $neutralcolor: #F6F6F6
+// $darkcolor: #CCCCCC
+// $bgcolor: #252525
+// $accentcolor: #17936f
+
+$headerheight: 70px
+$footerheight: 50px
+$projectlistwidth: 300px
+$fullwidth: calc(100vw - (100vw - 100%))
+
+$contentmargin: $headerheight + 20px
+
+$breakpoints: (small: 640px, medium: 768px, large: 1024px)
+
+html
+  width: 100%
+  // height: 100%
+  background-color: var(--bgcolor)
+  overflow-x: hidden
+  transition: background-color 0.7s ease-in-out
+
+  // --bgcolor: $bgcolor
+  // --lightcolor: $lightcolor
+  // --darkcolor: $darkcolor
+  // --neutralcolor: $neutralcolor
+
+body
+  font-family: 'Open Sans', sans-serif
+  width: 100%
+  // height: 100%
+  // min-width: 360px
+  max-width: 900px
+  margin: 0 auto
+  font-size: 16px
+  // background-color: $bgcolor
+  color: var(--lightcolor)
+  overflow-x: hidden
+  transition: color 0.7s ease-in-out
+
+
+h1
+  font-size: 2.5em
+  font-weight: 700
+  margin: 0px
+
+h2
+  font-size: 2em
+  font-weight: 400
+  margin: 0px
+
+p
+  font-size: 1em
+  font-weight: 300
+
+img
+  opacity: 1
+
+.md
+
+
+#canvashook
+
+  canvas
+    position: fixed
+    // width: $fullwidth
+    height: 100%
+    top: 0px
+    left: 0px
+    pointer-events: none
+    overflow-x: hidden
+    transform: translateX(0%)
+    transition: transform 1s ease-in-out
+    z-index: -1
+
+  &.move
+
+    canvas
+      transform: translateX(-15%)
+
+#app
+  width: $fullwidth
+  overflow-x: hidden
+
+#header
+  display: block
+  position: fixed
+  top: 0px
+  width: 100vw
+  max-width: 900px
+  z-index: 101
+  height: $headerheight
+  background-color: var(--bgcolor)
+  transition: all 0.7s ease-in-out
+
+@keyframes wave
+  0%
+    transform: translateY(0px)
+  100%
+    transform: translateY(10px)
+
+%wave-animation
+  animation: wave 3s
+  animation-iteration-count: infinite
+  animation-timing-function: ease-in-out
+  animation-direction: alternate
+
+.logotitle
+  display: flex
+  flex-direction: column
+  position: absolute
+  height: 100%
+  width: 100%
+  justify-content: center
+  top: calc(0%)
+  left: 0%
+  transform: translateX(0%)
+  transition: all 0.7s ease-in-out
+
+  &.mainscreen
+
+    %main-titles
+      @extend %wave-animation
+      top: calc(50vh - 100px)
+      left: 50%
+
+    .title
+      @extend %main-titles
+      animation-delay: -1s
+      span
+        cursor: default
+
+
+    .subtitle
+      @extend %main-titles
+      animation-delay: 0s
+
+    .title span, .subtitle span
+      transform: translateX(-50%)
+
+  &:not(.mainscreen)
+    @include media("<small")
+      transform: translateX(-100%)
+
+    .title span
+      cursor: pointer
+
+
+  %title-shared
+    display: flex
+    position: relative
+    top: 0%
+    left: 20px
+    transform: translateX(0%)
+    justify-content: flex-start
+    color: var(--lightcolor)
+    letter-spacing: 0.2em
+    margin: 5px 0px
+    // padding-left: 15px
+    align-items: center
+    transition: all 0.7s ease-in-out
+
+    span
+      transform: translateX(0%)
+      transition: all 0.7s ease-in-out
+
+  .title
+    @extend %title-shared
+    font-size: 1.5rem
+    font-weight: 700
+
+  .subtitle
+    @extend %title-shared
+    font-size: 0.8rem
+    font-weight: 300
+    line-height: 1rem
+    transition-delay: 0.05s
+
+.navigation
+  display: flex
+  position: absolute
+  width: 300px
+  right: 20px
+  top: 0px
+  transform: translate(0%)
+  flex-wrap: wrap-reverse
+  justify-content: center
+  transition: all 0.7s ease-in-out
+
+  &.mainscreen
+    right: 50%
+    transform: translateX(50%)
+
+    .listItem
+      @extend %wave-animation
+      top: 50vh !important
+
+  &:not(.mainstream)
+    @include media("<small")
+      right: 50%
+      transform: translate(50%)
+
+#themeMenu
+  display: block
+  position: absolute
+  top: 100%
+  transform: translateX(-100%)
+  left: 100%
+  padding: 0.5em
+  background-color: var(--bgcolor)
+  transition: all 0.7s ease-in-out
+
+  border: 1px solid var(--neutralcolor)
+  box-sizing: border-box
+
+  .themeWrap
+    display: flex
+    align-items: center
+
+    .themeBlock
+      display: inline-block
+      width: 20px
+      height: 20px
+      margin-right: 5px
+      cursor: pointer
+
+      &.active
+        &::before
+          content: "✖"
+          color: var(--bgcolor)
+          display: flex
+          justify-content: center
+          align-items: center
+          transition: all 0.7s ease-in-out
+
+    .themeName
+      display: inline-block
+      font-size: 0.8rem
+      font-weight: 400
+      letter-spacing: 0.2em
+      cursor: pointer
+      padding: 0.2em
+      text-transform: lowercase
+
+// #project-list
+//   display: flex
+//   width: 250px
+//   flex-wrap: wrap
+//   justify-content: center
+
+.listItem
+  display: flex
+  position: relative
+  align-items: center
+  margin: 5px
+  top: 10px
+  transition: all 0.7s ease-in-out
+
+  span
+    color: var(--bgcolor)
+    background-color: var(--neutralcolor)
+    font-size: 0.8rem
+    font-weight: 400
+    letter-spacing: 0.2em
+    cursor: pointer
+    padding: 0.2em
+    text-transform: lowercase
+    transition: all 0.3s ease-in-out
+    box-sizing: border-box
+    transition: all 0.7s ease-in-out
+
+  &.activeItem
+
+    span
+      border: 1px solid var(--neutralcolor)
+      color: var(--neutralcolor)
+      background-color: var(--bgcolor)
+      transition: all 0.7s ease-in-out
+
+#footer
+  display: block
+  position: fixed
+  height: $footerheight
+  bottom: 0px
+  left: 0px
+  width: 100%
+  background-color: var(--bgcolor)
+  transition: all 0.7s ease-in-out
+
+#backtolist
+  position: absolute
+  display: flex
+  left: 0px
+  bottom: 0px
+  // height: 100%
+  padding-bottom: $footerheight/4
+  padding-left: 20px
+  z-index: 1000
+  cursor: pointer
+
+  &>*
+    background-color: var(--neutralcolor)
+    color: var(--bgcolor)
+    padding: 5px 10px
+    border-radius: 10px
+    display: flex
+    align-items: center
+    transition: all 0.7s ease-in-out
+
+  svg
+    padding-right: 7px
+
+.social
+  display: flex
+  position: absolute
+  height: 100%
+  max-width: 500px
+  width: 100%
+  left: 50%
+  transform: translateX(-50%)
+  justify-content: center
+  box-sizing: border-box
+  font-size: 1.1rem
+  transition: all 0.7s ease-in-out
+
+  .s_item
+    display: flex
+    position: relative
+    bottom: 0px
+    left: 0px
+    align-items: center
+    justify-content: center
+    width: 100%
+    max-width: 3em
+    transition: all 0.7s ease-in-out
+
+    a
+      pointer-events: all
+      font-size: 1.4em
+      text-decoration: none
+      color: var(--lightcolor)
+      transition: all 0.7s ease-in-out
+
+  &.mainscreen .s_item
+    @extend %wave-animation
+    bottom: calc(50vh - 110px)
+    @include media('<small')
+      animation: none
+      bottom: 0px
+    @include media('height<400px')
+      animation: none
+      bottom: 0px
+
+
+#fadeIn
+  display: block
+  position: fixed
+  width: 100%
+  height: 100%
+  z-index: 10000
+  background-color: var(--bgcolor)
+  pointer-events: none
+  transition: all 0.7s ease-in-out
+
+.aboutIntro
+  span
+    font-size: 1.5em
+    font-weight: 600
+    line-height: 1.5em
+
+    a
+      text-decoration: none
+      color: var(--neutralcolor)
+      border: 1px solid var(--neutralcolor)
+      border-radius: 1em
+      padding: 0em 0.8em
+      transition: all 0.7s ease-in-out
+
+#project-item
+  display: block
+  position: absolute
+  width: $fullwidth
+  max-width: 900px
+  min-width: 360px
+  margin: 0 auto
+  margin-top: $contentmargin
+  margin-bottom: $footerheight
+
+  .projectItemWrap
+    position: absolute
+    width: $fullwidth
+    max-width: 900px
+    padding: 0px 15px
+    box-sizing: border-box
+    overflow-x: hidden
+
+    .transDelay
+      position: relative
+
+    .projectTitle
+      text-align: center
+      margin-bottom: 2em
+
+      h1
+        font-weight: 300
+        letter-spacing: 0.3em
+        font-size: 2.2em
+
+    .workProject
+      display: flex
+      flex-wrap: wrap
+      justify-content: center
+      margin-bottom: 50px
+
+      &>*
+        max-width: 50%
+        box-sizing: border-box
+        align-items: center
+        @include media("<medium")
+          max-width: 100%
+
+      .workProjectMore
+        @extend .aboutIntro
+        max-width: 100% !important
+        margin-bottom: 2rem
+
+        span
+
+          a
+            color: var(--neutralcolor)
+            border: 1px solid var(--neutralcolor)
+            padding: 0.2em 1em
+            border-radius: 1em
+            text-decoration: none
+            font-size: 0.8em
+            transition: all 0.7s ease-in-out
+
+      .workProjectImg
+        padding: 0em 0.5rem
+
+        img
+          width: 100%
+          height: auto
+
+      .workProjectDesc
+
+        p
+          padding: 0em 0.5rem
+          margin-top: 0px
+
+      .workProjectLink
+        text-align: left
+        margin: 1em 0.5em
+        margin-top: 0em
+        @include media("<medium")
+          text-align: center
+          margin-top: 1em
+
+        &>*
+          display: inline-block
+
+        h3
+          margin: 0em
+          margin-right: 1em
+
+        a
+          color: var(--neutralcolor)
+          border: 1px solid var(--neutralcolor)
+          padding: 0.2em 1em
+          border-radius: 1em
+          text-decoration: none
+          font-size: 0.8em
+          transition: all 0.7s ease-in-out
+
+        .noLink
+          font-style: italic
+          color: var(--lightcolor)
+          opacity: 0.6
+          font-size: 0.8em
+          padding-left: 1em
+          transition: all 0.7s ease-in-out
+
+    .photoList
+      display: flex
+      flex-wrap: wrap
+      justify-content: center
+      width: $fullwidth
+      max-width: 900px
+      box-sizing: border-box
+      margin-top: 50px
+
+      .photoWrap
+        display: inline-block
+        margin: 0 auto
+        padding: 0.5rem
+        max-width: 50%
+        box-sizing: border-box
+        @include media("<medium")
+          max-width: 100%
+
+        img
+          width: 100%
+          height: auto
+          // background-color: var(--neutralcolor)
+
+    .contactWrap
+      display: block
+      position: fixed
+      left: 50%
+      top: 45vh
+      transform: translate(-50%, -50%)
+      text-align: center
+
+      div
+        @extend %wave-animation
+
+        h2
+          color: var(--lightcolor)
+          font-weight: 600
+          margin: 1em 0em
+          font-size: 1.7em
+          transition: all 0.7s ease-in-out
+          @include media("<medium")
+            font-size: 1.2em
+
+          a
+            text-decoration: none
+            color: var(--neutralcolor)
+            border: 1px solid var(--neutralcolor)
+            border-radius: 1em
+            padding: 0.2em 1em
+            transition: all 0.7s ease-in-out
+
+    .toolTitle
+      color: var(--bgcolor)
+      font-size: 2em
+      font-weight: 600
+      letter-spacing: 0.1em
+      margin: 2rem 0rem
+      transition: all 0.7s ease-in-out
+      span
+        background-color: var(--neutralcolor)
+        padding: 0.1em 0.5em
+        transition: all 0.7s ease-in-out
+        svg
+          padding-left: 0.3em
+
+    .toolKit
+      width: 100%
+      margin-bottom: $footerheight
+
+      .toolGroup
+        display: flex
+        margin-bottom: 1rem
+        @include media ("<medium")
+          flex-direction: column
+        &>*
+          max-width: 50%
+          flex-grow: 1
+          @include media("<medium")
+            max-width: 100%
+
+        .toolIconGroup
+          border: 4px double var(--neutralcolor)
+          margin-right: 1rem
+          min-height: 8rem
+          box-sizing: border-box
+          display: flex
+          justify-content: center
+          align-items: center
+          transition: all 0.7s ease-in-out
+          @include media("<medium")
+            margin-right: 0rem
+
+          i
+            color: var(--neutralcolor)
+            padding: 0rem 1rem
+            font-size: 5em
+            transition: all 0.7s ease-in-out
+
+        .toolDesc
+
+          p
+
+
+
+/* VUE TRANSITIONS */
+
+//listslide
+.listslide-enter-active, .listslide-leave-active
+  transition: transform 1s ease-in-out
+
+.listslide-enter, .listslide-leave-to
+  transform: translateX(-150vw)
+
+.listslide-enter-to, .listslide-leave
+  transform: translateX(0vw)
+
+//projectslide
+.projectslide-enter-active, .projectslide-leave-active
+  transition: transform 1s ease-in-out
+
+.projectslide-enter, .projectslide-leave-to
+  transform: translateX(100vw)
+
+.projectswitch-enter-active, .projectswitch-leave-active
+  .transDelay
+    transition: transform 1s ease-in-out, color 0.7s ease-in-out, background-color 0.7s ease-in-out, border 0.7s ease-in-out
+
+.projectswitch-enter
+  .transDelay
+    transform: translateX(100vw)
+
+.projectswitch-enter-to, .projectswitch-leave
+  .transDelay
+    transform: translateX(0vw)
+
+.projectswitch-leave-to
+  .transDelay
+    transform: translateX(-100vw)
+
+// //canvasslide
+// .canvasslide-enter-active, .canvasslide-leave-active
+//   transition: transform 0.7s ease-in-out
+//
+// .canvasslide-enter, .canvasslide-leave-to
+//   transform: translateX(50%)
+
+/*********/

@@ -1,0 +1,36 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.textwrap1 {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+.textwrap2 {
+  display: flex;
+  align-items: center;
+}
+
+#text {
+  display: block;
+  transform: translateY(-1.4em);
+}
+
+#text > span {
+  display: inline-block;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 300;
+  font-size: 6em;
+  animation: float 6s ease-in-out infinite;
+  min-width: 0.3em;
+}
+
+@keyframes float {
+  0% {transform: translateY(0em);}
+  50% {transform: translateY(0.7em);}
+  100% {transform: translateY(0em);}
+}

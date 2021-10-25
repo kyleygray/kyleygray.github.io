@@ -1,8 +1,198 @@
-<!doctype HTML>
-<html>
+<!DOCTYPE html>
+<html style="--bgcolor:#3c373e;--lightcolor:#FFD8B5;--darkcolor:#1C0C80;--neutralcolor:#FF4366;">
 <head>
+  <title>Kyle Yount Front-End Web Development and Design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#202d31">
+  <meta name="description" content="Kyley Gray, web developer and designer from Seattle Washington. Custom coded websites for all occasions. Specializes in creating fun and interactive experiences for a new age of web.">
+  
+  <link rel="icon" href="/img/icon.ico">
+  <!-- FONTAWESOME -->
+  <script src="https://kit.fontawesome.com/b187a64d72.js" crossorigin="anonymous"></script>
+  <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/brands.js" integrity="sha384-sCI3dTBIJuqT6AwL++zH7qL8ZdKaHpxU43dDt9SyOzimtQ9eyRhkG3B7KMl6AO19" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script> -->
+  <!-- DEVICON -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css"> 
+
+  <link rel="stylesheet" href="/src/style.min.css">
+  <!-- VUEJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.15/vue.js"></script>
+  <!-- VELOCITY -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/2.0.2/velocity.min.js"></script>
+  <!-- FONT -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 </head>
 <body>
-  <h1>Future website for Kyley Gray</h1>
+  <div id="app">
+
+    <div id="fadeIn"></div>
+
+    <div id="header">
+      <div class="logotitle" :class="{mainscreen: !isProjectShowing}">
+        <div class="title"><span @click="hideProject()">KYLEY GRAY</span></div>
+        <div class="subtitle"><span>WEB DEVELOPMENT AND DESIGN</span></div>
+      </div>
+      <div class="navigation" :class="{mainscreen: !isProjectShowing}">
+        <div class="listItem"
+            v-for="(project, index) in projects"
+            @click="showProject(project)"
+            :style="'transition-delay:' +  (0.05 * index) + 's; animation-delay: ' + (-0.5 * index) + 's'"
+            :class="{activeItem: activeProject == index}">
+          <span>{{project.title}}</span>
+        </div>
+        <div class="listItem"
+            @click="toggleThemeMenu()"
+            style="transition-delay: 0.2s; animation-delay: -2s"
+            :class="{activeItem: themeMenuActive}">
+          <span>THEME</span>
+          <div id="themeMenu" v-show="themeMenuActive">
+            <div
+            v-for="(theme, index) in colorList"
+            class="themeWrap"
+            @click="changeTheme(index)"
+            :style="'background-color:' + colorList[index].bg + ';'">
+              <div :class="{themeBlock: true, active: activeTheme == index}" :style="'background-color:' + colorList[index].neutral + ';'"></div>
+              <div class="themeName" :style="'color:' + colorList[index].neutral + ';'">{{colorList[index].name}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="project-item">
+
+      <!-- ABOUT -->
+      <transition name="projectswitch" :duration="1400">
+        <div class="projectItemWrap" v-if="activeProject == 0">
+          <!-- <div class="projectTitle">
+            <h1>{{projects[0].title}}</h1>
+          </div> -->
+          <div class="aboutIntro transDelay" style="transition-delay: 0.05s">
+            <span>A full-stack web developer &amp; designer from the Pacific North-West.</span>
+          </div>
+          <div class="transDelay toolTitle" style="transition-delay: 0.1s"><span>Toolkit <i class="fas fa-chevron-down"></i></span></div>
+          <div class="toolKit">
+            <div class="toolGroup">
+              <div class="toolIconGroup transDelay" style="transition-delay: 0.15s">
+                <i class="devicon-sass-original"></i>
+                <i class="devicon-javascript-plain"></i>
+                <i class="devicon-typescript-plain"></i>
+              </div>
+              <div class="toolDesc transDelay" style="transition-delay: 0.2s">
+                <p><b>HTML, CSS, SASS, JAVASCRIPT, TYPESCRIPT:</b>&nbsp;Kyley has many years of experience designing for web from concept to reality with a mobile-first mentality.</p>
+              </div>
+            </div>
+            <div class="toolGroup">
+              <div class="toolIconGroup transDelay" style="transition-delay: 0.25s">
+                <i class="devicon-vuejs-plain"></i>
+                <i class="devicon-angularjs-plain"></i>
+              </div>
+              <div class="toolDesc transDelay" style="transition-delay: 0.3s">
+                <p><b>VUEJS, ANGULAR:</b>&nbsp;A reactive framework is the backbone for most projects. Interactivity and responsiveness are very important in today's web world.</p>
+              </div>
+            </div>
+            <div class="toolGroup">
+              <div class="toolIconGroup transDelay" style="transition-delay: 0.35s">
+                <i class="devicon-nodejs-plain"></i>
+                <i class="devicon-vscode-plain-wordmark"></i>
+              </div>
+              <div class="toolDesc transDelay" style="transition-delay: 0.4s">
+                <p><b>NODEJS, GITHUB, VSCODE:</b>&nbsp;These frameworks enable Kyley's deveopment. Passion for learning is key in an ever-changing web environment.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+
+      <!-- CONTACT -->
+      <transition name="projectswitch" :duration="1100">
+        <div class="projectItemWrap" v-if="activeProject == 1">
+          <!-- <div class="projectTitle">
+            <h1>{{projects[1].title}}</h1>
+          </div> -->
+          <div class="contactWrap">
+            <div>
+              <h2 class="transDelay">For all inquiries, please email:</h2>
+            </div>
+            <div style="animation-delay:-1s">
+              <h2 class="transDelay" style="transition-delay: 0.05s">
+                <a href="mailto:kyle@kyount.com">kyley@kyleygray.com</a>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </transition>
+
+      <!-- PHOTOGRAPHY -->
+      <!-- <transition name="projectswitch" :duration="1400">
+        <div class="projectItemWrap" v-if="activeProject == 2">
+          <div class="aboutIntro transDelay" style="transition-delay: 0.05s">
+            <span>I do enjoy photography. Here are a select number of photos from my <a href="http://instagram.com/cubeshark" target="_blank">Instagram</a> taken over the last few years.</span>
+          </div>
+          <div class="photoList">
+            <div class="photoWrap transDelay" v-for="(i, index) in 16" :style="'transition-delay:' + 0.05*index + 's'" >
+              <img :src="'/img/photos/' + (index + 1) + '.jpg'" alt="">
+            </div>
+          </div>
+        </div>
+      </transition> -->
+
+      <!-- PROJECTS -->
+      <transition name="projectswitch" :duration="1400">
+        <div class="projectItemWrap" v-if="activeProject == 2">
+          <!-- <div class="projectTitle">
+             <h1>{{projects[3].title}}</h1>
+          </div> -->
+          <div class="workProject transDelay" v-for="(project, index) in projectList" :style="'transition-delay:' + 0.05*index + 's'">
+            <div class="workProjectImg">
+              <img :src="projectList[index].image" alt="">
+            </div>
+            <div class="workProjectDesc">
+              <div class="workProjectLink">
+                <h3>{{projectList[index].title}}</h3>
+                <a v-if="projectList[index].link != null" :href="projectList[index].link" target="_blank">visit website <i class="fas fa-arrow-right"></i></a>
+                <div class="noLink" v-else>(website unavailable)</div>
+              </div>
+              <p v-html="projectList[index].desc"></p>
+            </div>
+          </div>
+        </div>
+      </transition>
+
+    </div>
+
+    <div id="footer">
+      <!-- <transition name="infofade">
+        <div id="backtolist" @click="hideProject()" v-if="isProjectShowing == true">
+          <span><i class="fas fa-arrow-left"></i>back</span>
+        </div>
+      </transition> -->
+      <div class="social" :class="{mainscreen: (!isProjectShowing || activeProject == 1)}">
+        <div class="s_item">
+          <a href="https://www.linkedin.com/in/kyley-gray/" target="_blank"><i class="fab fa-linkedin"></i></a>
+        </div>
+        <!-- <div class="s_item" style="animation-delay:-1s; transition-delay:0.05s">
+          <a href="https://github.com/kyleygray" target="_blank"><i class="fab fa-github"></i></a>
+        </div> -->
+      </div>
+    </div>
+
+    <!-- <div id="canvashook" v-bind:class="{ move: isProjectShowing }"></div> -->
+    <div id="canvashook"></div>
+
+  </div>
+  <script src="/src/script.js"></script>
+  <!-- <script src="/src/bugs.js"></script> -->
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-78123281-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-78123281-1');
+  </script>
+
 </body>
 </html>
