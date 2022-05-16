@@ -31,7 +31,7 @@ var projectObj = [
         title: "CUBESHARK",
         image: "/img/projects/cubeshark.jpg",
         desc: "Kyley's musical alias. Built to showcase audio production work. Made use of the limited embedded player API to play the music. Built on top of <b>VueJS</b>.",
-        link: "http://cubeshark.net"
+        link: "#"
       },
       // {
       //   title: "JOY FOR THIS JOURNEY",
